@@ -13,7 +13,7 @@ var __Protolight__bootstrap = {
 	/** Finished, quite simple, isn't it ? */
 	
 	'loader': {
-		'prefix': 'javascript',
+		'prefix': 'javascript:',
 		'func'	: "function loadScript(scriptURL){var scriptElem=document.createElement('SCRIPT'); scriptElem.setAttribute('language','JavaScript');scriptElem.setAttribute('src',scriptURL);document.body.insertBefore(scriptElem, document.body.firstChild);}loadScript('%SCRIPT_URL%');",
 		'regexp': new RegExp('(%SCRIPT_URL%)', 'g')
 	},
@@ -30,6 +30,7 @@ var __Protolight__bootstrap = {
 	},
 
 	init: function() {
+		var Protolight = null;
 		if (typeof(Prototype) == 'undefined') {
 			this.loadScript('http://prototypejs.org/assets/2008/1/25/prototype-1.6.0.2.js');
 		}
@@ -53,7 +54,7 @@ __Protolight.prototype = {
 	
 	Backend: 'protolight',
 	
-	BaseURLLauncher: __Protolight__bootstrap.loader.func.replace(__Protolight__bootstrap.loader.regexp, __Protolight__bootstrap.config.baseurl),
+	BaseURLLauncher: __Protolight__bootstrap.loader.func.replace(__Protolight__bootstrap.loader.regexp, __Protolight__bootstrap.config.baseurl+'protolight.js'),
 	
 	BaseURLRes: __Protolight__bootstrap.config.baseurl,
 	
@@ -139,7 +140,7 @@ __Protolight.prototype = {
 				}
 			}
 		}.bind(this));
-		$('pl_prefs_saveurl').href = this.BaseURLLauncher + " (function(){window.setTimeout(function(){ Protolight.setPrefs("+this.getPrefs().toJSON()+"); }, 4000); })();";
+		$('pl_prefs_saveurl').href = __Protolight__bootstrap.loader.prefix+encodeURIComponent(this.BaseURLLauncher + " (function(){window.setTimeout(function(){ Protolight.setPrefs("+this.getPrefs().toJSON()+"); }, 10000); })();");
 	},
 	
 	getPrefs: function() {
@@ -289,7 +290,7 @@ __Protolight.prototype = {
 	
 }
 //overwrite the class variable...
-var Protolight = new __Protolight();
+Protolight = new __Protolight();
 
 /**
  * A simple plugin interface, extends to make your own :)
