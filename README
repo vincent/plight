@@ -1,0 +1,6 @@
+<h2>ProtoLight</h2>
+a quick-and-dirty SpotLight for the Web.
+
+It create a <strong>search query</strong> input, and propose you some shortcuts to various web services.
+
+<img src="https://github.com/vincent/protolight/tree/master/doc/img/ss1.png?raw=true" />
