@@ -97,9 +97,11 @@ __Protolight.prototype = {
 	
 		// Put our container in a div#protolight
 		this.dom_container = new Element('div', { 'id':'protolight' });
+		this.dom_container.setStyle({ 'background': 'url('+this.BaseURLRes+'img/bgheader.png)' });
 		$$('body')[0].insert({'Bottom':this.dom_container});
 		
 		this.dom_header = new Element('div', { 'id':'pl_header' });
+		this.dom_header.setStyle({ 'background': 'url('+this.BaseURLRes+'img/bgquery.png) no-repeat 0 0' });
 		this.dom_container.insert({'Top':this.dom_header});
 
 		this.dom_data = new Element('div', { 'id':'pl_data' });
@@ -109,7 +111,13 @@ __Protolight.prototype = {
 		this.dom_container.insert({'Bottom':this.dom_results});
 
 		// Then the info button
-		this.dom_info = new Element('div', { 'id':'pl_info' }).observe('mouseover',function(e){Event.element(e).addClassName('hover')}).observe('mouseout',function(e){Event.element(e).removeClassName('hover')});
+		this.dom_info = new Element('div', { 'id':'pl_info', 'style':'background-image: url(http://192.168.0.12/protolight/img/info.png)' })
+		this.dom_info.observe('mouseover',function(e){Event.element(e).addClassName('hover')}).observe('mouseout',function(e){Event.element(e).removeClassName('hover')});
+		//this.dom_info.setStyle({ 'background-color':'transparent' });
+		//this.dom_info.setStyle({ 'background-attachment':'scroll' });
+		//this.dom_info.setStyle({ 'background-repeat':'no-repeat' });
+		this.dom_info.setStyle({ 'background-image': 'url(http://192.168.0.12/protolight/img/info.png)' });
+		//this.dom_info.setStyle({ 'background-color':'transparent', 'background-attachment':'scroll', 'background-repeat':'no-repeat', 'background-image': 'url(http://192.168.0.12/protolight/img/info.png)' });
 		this.dom_info.observe('click', function(){ this.prefsPanel.toggle(); }.bind(this));
 		this.dom_header.insert({'Bottom':this.dom_info});
 
