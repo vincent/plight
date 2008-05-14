@@ -8,7 +8,7 @@ var __Protolight__bootstrap = {
 	 * You probably have to change this, to point to your install of Protolight
 	 */
 	config: {
-		'baseurl': 'http://192.168.0.12/protolight/'
+		'baseurl': 'http://localhost:8080/plight/'
 	},
 	/** Finished, quite simple, isn't it ? */
 	
@@ -527,19 +527,18 @@ Object.extend(PL_TracsEngine.prototype, {
 		//this.parent.prefsInputs.get('tracs').each(function(trac){
 		this.tracs.each(function(trac){
 			var r = [];
-			var nb = string.match(/^[\[|#]*(\d+)$/);
-			if (nb) {
-				nb = nb[1];
-				r.push({
+			var matches = string.match(/^[\[|#]*(\d+)$/);
+			if (matches) {
+				if (matches[0]==matches[1] || matches[0].startsWith('#')) r.push({
 					'categoryName':'Trac - '+trac.value.name,
-					'label':'Goto ticket '+nb,
-					'action':function(){this.goTicket(trac.key, nb);}.bind(this)
+					'label':'Goto ticket '+matches[1],
+					'action':function(){this.goTicket(trac.key, matches[1]);}.bind(this)
 				});
 				
-				r.push({
+				if (matches[0]==matches[1] || matches[0].startsWith('[')) r.push({
 					'categoryName':'Trac - '+trac.value.name,
-					'label':'Goto changeset '+string,
-					'action':function(){this.goChangeset(trac.key, nb);}.bind(this)
+					'label':'Goto changeset '+matches[1],
+					'action':function(){this.goChangeset(trac.key, matches[1]);}.bind(this)
 				});
 			}			
 			r.push({
