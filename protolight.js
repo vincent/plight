@@ -588,5 +588,57 @@ Object.extend(PL_TracsEngine.prototype, {
 		
 });
 Protolight.registerEngine( new PL_TracsEngine() );
+
+
+
+/**
+ * PL_IPEngine, some utils about ip@
+ */
+var PL_IPUtilsEngine = Class.create();
+Object.extend(PL_IPUtilsEngine.prototype, PL_Engine);
+Object.extend(PL_IPUtilsEngine.prototype, {
+	
+	name: 'IPUtils',
+
+	initialize: function() {
+	},
+	
+	pl_init: function() {
+	},
+	
+	doSearch: function(string) {
+		var r = [];
+		
+		if (string.match(/(?:\d{1,3}\.){3}\d{1,3}/)) r.push({
+				'categoryName':'General',
+				'categoryImage':this.categoryImage,
+				'label':'Lookup with MaxMind',
+				'action':function(){this.lookup(string);}.bind(this)
+		});
+		
+		this.parent.addResults(r);
+	},
+	
+	lookup: function(ip) {
+		var lookupform = new Element('form', { 'action':'http://www.maxmind.com/app/locate_ip', 'method':'post', 'style':'display:none;' });
+
+		var inputs = $H({'ips':ip, 'type':'', 'u':'', 'p':''});
+		inputs.each(function(input){
+			lookupform.insert(new Element('input', { 'name':input.key, 'value':input.value }));
+		});
+
+		this.parent.dom_container.insert(lookupform);
+		lookupform.submit();
+	}
+	
+});
+Protolight.registerEngine( new PL_IPUtilsEngine() );
+
+
+
+
+
+
+
 }
 __Protolight__bootstrap.waitForObjectToDo('Prototype', doProtoLight)
